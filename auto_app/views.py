@@ -31,3 +31,5 @@ class HomeApi(APIView , Serializer):
                     )
             except:
                 return Response(status=404)
+
+    # def post(self , request:Request):
