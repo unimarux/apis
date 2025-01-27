@@ -1,35 +1,58 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from .models import Article , Comment , Category
-from rest_framework.serializers import Serializer
+from .models import Book , Comment , Category
 from django.forms.models import model_to_dict
+from .serializers import BookSerializer
 
 
-class HomeApi(APIView , Serializer):
+class HomeApi(APIView):
     def get(self , request:Request , pk=None):
-        news = Article.objects.all()
-        cars_list = []
+        books = Book.objects.all()
         if not pk:
-            for new in news:
-                cars_list.append({
-                    'id':new.id,
-                    'title':new.title,
-                    'category':new.category.name,
-                    'author':new.author.username,
-                    'created':new.created,
-                    'content':new.content,
-                })
-            return Response({
-                'news':cars_list
-            })
+            return Response(
+                BookSerializer(books, many=True).data
+            )
         else:
             try:
-                new = Article.objects.get(pk=pk)
+                books = Book.objects.get(pk=pk)
+                serializer = BookSerializer(books)
                 return Response(
-                        model_to_dict(new)
+                        BookSerializer(books).data
                     )
             except:
                 return Response(status=404)
 
-    # def post(self , request:Request):
+    def post(self, request: Request, pk=None):
+        if pk:
+            return Response(
+                "Method POST is not allowed here",
+                status=405
+            )
+        serializer = BookSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        book = serializer.create(validated_data=serializer.validated_data)
+
+        return Response(serializer.data)
+
+    def put(self , request:Request , pk=None):
+        if not pk:
+            return Response(
+                "Method PUT is not allowed here",
+                status=405
+            )
+
+        serializer = BookSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.update(instance=Book.objects.get(pk=pk),
+                          validated_data=request.data)
+        return Response(serializer.data)
+
+    def delete(self , request:Request , pk=None):
+        if not pk:
+            return Response(
+                "Method DELETE is not allowed here",
+                status=405
+            )
+        Book.objects.get(pk=pk).delete()
+        return Response(status=204)

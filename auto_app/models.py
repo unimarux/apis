@@ -31,7 +31,7 @@ class Category(models.Model):
         return self.name
 
 
-class Article(models.Model):
+class Book(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     created = models.DateField(auto_now_add=True)
@@ -43,7 +43,7 @@ class Article(models.Model):
 
 
 class Comment(models.Model):
-    article = models.ForeignKey(Article , on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     username = models.ForeignKey(MyUser , on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     content = models.CharField(max_length=300)
