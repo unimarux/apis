@@ -4,9 +4,11 @@ from rest_framework.request import Request
 from .models import Book , Comment , Category
 from django.forms.models import model_to_dict
 from .serializers import BookSerializer
+from .permissons import BookPermission
 
 
 class HomeApi(APIView):
+    permission_classes = [BookPermission]
     def get(self , request:Request , pk=None):
         books = Book.objects.all()
         if not pk:
