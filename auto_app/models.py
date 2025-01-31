@@ -31,23 +31,12 @@ class Category(models.Model):
         return self.name
 
 
-class Book(models.Model):
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    created = models.DateField(auto_now_add=True)
+class Food(models.Model):
+    name = models.CharField(max_length=100)
     category = models.ForeignKey(Category , on_delete=models.CASCADE)
-    author = models.ForeignKey(MyUser , on_delete=models.CASCADE)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10 , decimal_places=2)
 
     def __str__(self):
-        return self.title
+        return self.name
 
-
-class Comment(models.Model):
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    username = models.ForeignKey(MyUser , on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
-    content = models.CharField(max_length=300)
-
-
-    def __str__(self):
-        return str(self.date)

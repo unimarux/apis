@@ -1,13 +1,9 @@
 from rest_framework import serializers
-from rest_framework.renderers import JSONRenderer
-import io
-from rest_framework.parsers import JSONParser
-
-from .models import Book , Comment , Category , MyUser
+from .models import Category , Food
 
 
-class BookSerializer(serializers.ModelSerializer):
+class FoodSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Book
-        fields = ['id' , 'title' , 'content' , 'created' , 'category']
+        model = Food
+        fields = '__all__'
         depth = 1
