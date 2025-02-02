@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Category , Food
+from .models import Category , Course
 
 
-class FoodSerializer(serializers.ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Food
+        model = Course
         fields = '__all__'
         depth = 1

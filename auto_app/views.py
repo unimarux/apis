@@ -1,18 +1,21 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
-from .models import Food , Category
-from .serializers import  FoodSerializer
+from .models import Course , Category
+from .serializers import  CourseSerializer
 from django.forms.models import model_to_dict
+from .permissons import IsAdminOrReadOnly
 from rest_framework import generics
 
 
-class FoodListAPIView(generics.ListCreateAPIView):
-    serializer_class = FoodSerializer
-    queryset = Food.objects.all()
+class CourseListAPIView(generics.ListCreateAPIView):
+    serializer_class = CourseSerializer
+    queryset = Course.objects.all()
+    permission_classes = [IsAdminOrReadOnly]
 
 
 
-class FoodDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = FoodSerializer
-    queryset = Food.objects.all()
+class CourseDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CourseSerializer
+    queryset = Course.objects.all()
+    permission_classes = [IsAdminOrReadOnly]

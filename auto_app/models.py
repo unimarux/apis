@@ -31,7 +31,7 @@ class Category(models.Model):
         return self.name
 
 
-class Food(models.Model):
+class Course(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category , on_delete=models.CASCADE)
     description = models.TextField()
