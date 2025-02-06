@@ -1,7 +1,11 @@
-from django.urls import path
-from .views import CommentListAPIView , CommentDetailAPIView
+from django.urls import path , include
+from .views import FoodsApiView
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'books', FoodsApiView)
+
 
 urlpatterns = [
-    path('api/v1.0/themes', CommentListAPIView.as_view(), name='home'),
-    path('api/v1.0/themes/<int:pk>', CommentDetailAPIView.as_view(), name='home'),
+    path("",include(router.urls))
 ]

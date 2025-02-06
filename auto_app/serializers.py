@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Theme , Comment
+from .models import Food
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class FoodSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Comment
+        model = Food
         fields = '__all__'
         depth = 1

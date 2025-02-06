@@ -11,12 +11,12 @@ class MyUser(AbstractUser):
 
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='hexashop_users',
+        related_name='users',
         blank=True
     )
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='hexashop_user_permissions',
+        related_name='user_permissions',
         blank=True
     )
 
@@ -24,19 +24,28 @@ class MyUser(AbstractUser):
     def __str__(self):
         return self.username
 
-class Theme(models.Model):
+class FoodType(models.Model):
     name = models.CharField(max_length=100 , unique=True)
 
     def __str__(self):
         return self.name
 
 
-
-class Comment(models.Model):
+class Food(models.Model):
+    food_type = models.ForeignKey(FoodType , on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    category = models.ForeignKey(Theme , on_delete=models.CASCADE)
-    description = models.TextField()
+    content = models.TextField
     price = models.DecimalField(max_digits=10 , decimal_places=2)
 
     def __str__(self):
         return self.name
+
+
+class Comment(models.Model):
+    food = models.ForeignKey(Food , on_delete=models.CASCADE)
+    username = models.ForeignKey(MyUser , on_delete=models.CASCADE)
+    comment = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.comment

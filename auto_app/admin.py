@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Theme , Comment
+from .models import FoodType , Food
 # Register your models here.
 
 
-admin.site.register(Theme)
-admin.site.register(Comment)
+admin.site.register(FoodType)
+admin.site.register(Food)
